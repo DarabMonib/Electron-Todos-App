@@ -3,17 +3,19 @@ console.log(section);
 
 window.electronAPI.getImage((e, item) => {
     
-    let todo = document.createElement('nav')
+    let todo = document.createElement('h2')
+        todo.className = 'text-xl text-white font-bold'
         todo.innerHTML = item.todo
 
-    let author = document.createElement('nav')
-        author.innerHTML = item.author
+    let author = document.createElement('h4')
+        author.className = 'text-sm text-white font-italic'
+        author.innerHTML = '~by ' + item.author + ' on ' + formatDate(new Date());
     
     let itemBlock = document.createElement('nav')
         itemBlock.appendChild(todo);
         itemBlock.appendChild(author);
 
-        itemBlock.className = "text-lg text-white p-4 mb-2 bg-blue-500 shadow-xl rounded-xl flex";
+        itemBlock.className = "text-lg text-white p-4 mb-2 bg-blue-500 shadow-xl rounded-xl";
         itemBlock.style.width = 'fit-content'
         itemBlock.style.marginLeft = 'auto'
         itemBlock.style.marginRight = 'auto'
@@ -45,3 +47,15 @@ let closeBtn = document.querySelector('div');
 closeBtn.addEventListener('click', () => {
     window.electronAPI.closeAll(true);
 })
+
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+  
+  function formatDate(date) {
+    return [
+      padTo2Digits(date.getDate()),
+      padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/');
+  }
