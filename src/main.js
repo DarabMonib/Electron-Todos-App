@@ -1,18 +1,19 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+const { dirname } = require('path')
 const path = require('path')
 
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: path.join(__dirname, 'icons/512x512.png' ),
+    icon: path.join(__dirname, 'icons/512x512.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload/preload-home.js')
     },
     frame: false
   })
 
-  win.loadFile('index.html')
+  win.loadFile('src/views/home.html')
 
   win.on('close', () => {
     app.quit();
@@ -21,9 +22,9 @@ function createWindow () {
   const win2 = new BrowserWindow({
     width: 600,
     height: 400,
-    icon: path.join(__dirname, 'icons/512x512.png' ),
+    icon: path.join(__dirname, 'icons/512x512.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload2.js')
+      preload: path.join(__dirname, 'preload/preload-add.js')
     },
     frame: false,
     show: false
@@ -34,7 +35,7 @@ function createWindow () {
     // win2.hide()
   })
 
-  win2.loadFile('index2.html')
+  win2.loadFile('src/views/add.html')
 
   ipcMain.on('openWin2', () => {
     console.log('activating!!!')
