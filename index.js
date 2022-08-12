@@ -1,4 +1,17 @@
 let ol = document.querySelector('ol');
+
+if(ol.children.length == 0) {
+
+    ol.style.border = "8px rgb(236, 236, 236) dotted";
+    ol.style.width = "fit-content";
+    ol.style.margin = "auto";
+    ol.style.padding = "20px";
+
+}
+else {
+    ol.className = '';
+}
+
 console.log(ol);
 
 window.electronAPI.getImage((e, item) => {
@@ -19,4 +32,10 @@ let button = document.querySelector('button');
 button.addEventListener('click', () => {
     console.log('Okay!')
     window.electronAPI.openWin2(true);
+})
+
+let closeBtn = document.querySelector('div');
+
+closeBtn.addEventListener('click', () => {
+    window.electronAPI.closeAll(true);
 })

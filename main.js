@@ -8,7 +8,7 @@ function createWindow () {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    // frame: false
+    frame: false
   })
 
   win.loadFile('index.html')
@@ -24,14 +24,13 @@ function createWindow () {
     webPreferences: {
       preload: path.join(__dirname, 'preload2.js')
     },
-    // frame: false,
+    frame: false,
     show: false
   })
 
   win2.on('close', (event) => {
     event.preventDefault()
-    win2.hide()
-
+    // win2.hide()
   })
 
   win2.loadFile('index2.html')
@@ -45,6 +44,20 @@ function createWindow () {
     win.webContents.send('foward-image', item)
   })
 
+  // Close All Windows Via Custom Button..
+
+  ipcMain.on('closeAll', () => {
+    console.log('closing app!..')
+    app.quit();
+    win.close();
+    win2.close();
+  })
+
+  ipcMain.on('hideWin2', () => {
+    console.log('hiding window 2!..')
+    win2.hide();
+  })
+  
 }
 
 app.whenReady().then(() => {

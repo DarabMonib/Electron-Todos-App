@@ -7,3 +7,9 @@ button.addEventListener('click', () => {
         window.electronAPI.sendItem(input.value)
 
 })
+
+let closeBtn = document.querySelector('div');
+
+closeBtn.addEventListener('click', () => {
+    window.electronAPI.hideWin2(true);
+})
