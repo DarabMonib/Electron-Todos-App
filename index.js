@@ -1,17 +1,4 @@
 let ol = document.querySelector('ol');
-
-if(ol.children.length == 0) {
-
-    ol.style.border = "8px rgb(236, 236, 236) dotted";
-    ol.style.width = "fit-content";
-    ol.style.margin = "auto";
-    ol.style.padding = "20px";
-
-}
-else {
-    ol.className = '';
-}
-
 console.log(ol);
 
 window.electronAPI.getImage((e, item) => {
@@ -24,6 +11,17 @@ window.electronAPI.getImage((e, item) => {
     newItem.style.marginRight = 'auto'
 
     ol.appendChild(newItem)
+
+    if(ol.children.length !== 0) {
+
+        ol.style.border = "4px rgb(236, 236, 236) dotted";
+        ol.style.width = "fit-content";
+        ol.style.marginLeft = "auto";
+        ol.style.marginRight = "auto";
+        ol.style.marginTop = "16px";
+        ol.style.padding = "20px";
+
+    }
 
 })
 
