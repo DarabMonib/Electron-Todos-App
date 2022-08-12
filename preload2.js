@@ -12,6 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
 const { contextBridge, ipcMain, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  sendItem: (item) => ipcRenderer.send('li', item),
+  sendItem: (item) => ipcRenderer.send('sendItem', item),
   hideWin2: (bool) => ipcRenderer.send('hideWin2', bool)
 })

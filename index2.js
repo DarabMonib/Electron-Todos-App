@@ -1,10 +1,14 @@
 let button = document.querySelector('button');
-let input = document.querySelector('input');
+let todo = document.querySelector('#todo');
+let author = document.querySelector('#author');
 
 button.addEventListener('click', () => {
 
-    if(input.value !== '')
-        window.electronAPI.sendItem(input.value)
+    if(todo.value !== '' && author.value !== '')
+        window.electronAPI.sendItem({
+            todo: todo.value,
+            author: author.value
+        })
 
 })
 

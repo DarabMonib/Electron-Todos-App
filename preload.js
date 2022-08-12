@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  getImage: (item) => ipcRenderer.on('foward-image', item),
+  getImage: (item) => ipcRenderer.on('fowardItem', item),
   openWin2: (bool) => ipcRenderer.send('openWin2', bool),
   closeAll: (bool) => ipcRenderer.send('closeAll', bool)
 })

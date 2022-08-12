@@ -41,8 +41,8 @@ function createWindow () {
     win2.show()
   })
 
-  ipcMain.on('li', (e, item) => {
-    win.webContents.send('foward-image', item)
+  ipcMain.on('sendItem', (e, item) => {
+    win.webContents.send('fowardItem', item)
   })
 
   // Close All Windows Via Custom Button..
