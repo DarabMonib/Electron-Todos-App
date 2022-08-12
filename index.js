@@ -3,6 +3,8 @@ console.log(section);
 
 window.electronAPI.getImage((e, item) => {
     
+    new Notification(`Message From ${item.author}`, { body: item.todo })
+
     let todo = document.createElement('h2')
         todo.className = 'text-xl text-white font-bold'
         todo.innerHTML = item.todo
@@ -24,7 +26,7 @@ window.electronAPI.getImage((e, item) => {
 
     if(section.children.length !== 0) {
 
-        section.style.border = "4px rgb(236, 236, 236) dotted";
+        section.style.border = "2px rgb(236, 236, 236) dotted";
         section.style.width = "fit-content";
         section.style.marginLeft = "auto";
         section.style.marginRight = "auto";
