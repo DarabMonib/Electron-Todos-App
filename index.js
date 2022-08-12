@@ -3,7 +3,7 @@ console.log(section);
 
 window.electronAPI.getImage((e, item) => {
     
-    new Notification(`Message From ${item.author}`, { body: item.todo })
+    new Notification(`Message From ${item.author}`, { body: item.todo, icon: './icons/512x512.png' })
 
     let todo = document.createElement('h2')
         todo.className = 'text-xl text-white font-bold'

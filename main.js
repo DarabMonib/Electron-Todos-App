@@ -49,9 +49,9 @@ function createWindow () {
 
   ipcMain.on('closeAll', () => {
     console.log('closing app!..')
-    app.quit();
-    win.close();
     win2.close();
+    win.close();
+    app.quit();
   })
 
   ipcMain.on('hideWin2', () => {
