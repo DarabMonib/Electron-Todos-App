@@ -1,8 +1,13 @@
 // Sockets Connection
-var socket = io.connect('http://192.168.23.211:4000')
-// var socket = io.connect('https://electron-socket-server.vercel.app/');
+// var socket = io.connect('http://192.168.100.12:4000')
+var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
 
 let section = document.querySelector('section');
+
+let message = document.querySelector('#message');
+let by = document.querySelector('#by');
+
+let send = document.querySelector('#send');
 
 window.electronAPI.init((e, todos) => {
     console.log(e, todos)
@@ -11,27 +16,24 @@ window.electronAPI.init((e, todos) => {
     });
 })
 
-window.electronAPI.getImage((e, item) => {
-    
+send.addEventListener('click', () => {
+
     //Socket Test Emit!!
     socket.emit('todo', ["POST", {
-        todo: item.todo,
-        author: item.author
+        todo: message.value,
+        author: by.value
     }]);
 
-})
+})    
 
 socket.on('todo', (item) => {
     console.log(item)
     new Notification(`Message From ${item[1].author}`, { body: item[1].todo, icon: './icons/512x512.png' })
+    const ding = new Audio;
+    ding.src = '../../noti.mp3'
+    ding.play();
+    
     appendItem(item[1]);
-})
-
-let button = document.querySelector('button');
-
-button.addEventListener('click', () => {
-    console.log('Sending Socket Signal...')
-    window.electronAPI.openWin2(true);
 })
 
 //Socket Listener!!
@@ -70,34 +72,28 @@ function formatDate(date) {
 function appendItem(item) {
     
     let todo = document.createElement('h2')
-    todo.className = 'text-xl text-white font-bold'
+    todo.style.color = 'rgb(108, 108, 108)'
+    todo.className = 'text-xl text-slate-600 font-bold'
     todo.innerHTML = item.todo
 
     let author = document.createElement('h4')
-        author.className = 'text-sm text-white font-italic'
-        author.innerHTML = '~ by ' + item.author 
+        author.style.color = 'rgb(192, 192, 192)'
+        author.style.textAlign = 'left'
+        author.className = 'text-sm text-slate-600 font-italic'
+        author.innerHTML =  item.author 
         // + ' on ' + formatDate(new Date());
 
     let itemBlock = document.createElement('nav')
         itemBlock.appendChild(todo);
         itemBlock.appendChild(author);
 
-        itemBlock.className = "text-lg text-white p-4 mb-2 bg-blue-500 shadow-xl rounded-xl";
+        itemBlock.className = "text-lg p-4 mb-2 shadow-xl rounded-xl";
         itemBlock.style.width = 'fit-content'
-        itemBlock.style.marginLeft = 'auto'
+        itemBlock.style.color = 'black'
+        // itemBlock.style.marginLeft = 'auto'
         itemBlock.style.marginRight = 'auto'
 
     section.appendChild(itemBlock)
-
-    if(section.children.length !== 0) {
-
-        section.style.border = "2px rgb(236, 236, 236) dotted";
-        section.style.width = "fit-content";
-        section.style.marginLeft = "auto";
-        section.style.marginRight = "auto";
-        section.style.marginTop = "16px";
-        section.style.padding = "20px";
-
-    }
+    section.scrollTo(0, section.scrollHeight);
 
 }

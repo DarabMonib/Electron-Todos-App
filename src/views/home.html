@@ -7,30 +7,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
     <link rel="stylesheet" href="../styles/style.css">    
 </head>
-<body class="text-center">
+<body class="text-center" style="overflow:hidden;">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
 
     <nav class="p-6 shadow-sm" style="background-color: rgb(247, 247, 247);"></nav>
 
-    <aside style="display: flex; align-items: center; justify-content: center;">
-        <img src="../icons/512x512.png" width="100" height="100"> 
-        <h1 class="text-4xl text-gray-600">
-           Todo Items...
+    <aside style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h1 class="text-4xl text-gray-600 p-4">
+           Chat App
         </h1>
     </aside>
 
-    <p class="text-md text-gray-400">
-        here are the list of things that need to be done!.
-    </p>
-    
-    <button class="shadow-xl rounded-2xl shadow-blue-500 p-4 mt-4 bg-blue-500 text-white">Edit List!</button>
-  
-    <section class="shadow-xl"></section>
+    <p style="color: rgb(177, 184, 190);">Write your messages in the chat box below...</p>
 
-    <div id="closeBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0 bg-white z-10" style="width: fit-content; -webkit-app-region: no-drag;">❌</div>
-    <div id="maxBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-10 bg-white z-10" style="width: fit-content; -webkit-app-region: no-drag;">🔲</div>
-    <div id="minBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-20 bg-white z-10" style="width: fit-content; -webkit-app-region: no-drag;">➖</div>
+    <section class="text-center h-72" style="width: 80%; margin: auto; overflow-y: scroll; overflow-x: hidden; margin-left: auto; margin-right: auto; overflow-wrap: break-word; scrollbar-width: none;"></section>
+
+    <div id="closeBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0 bg-white z-10 static" style="width: fit-content;">❌</div>
+    <div id="maxBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-10 bg-white z-10 static" style="width: fit-content;">🔲</div>
+    <div id="minBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-20 bg-white z-10 static" style="width: fit-content;">➖</div>
+
+    <div class="flex flex-col fixed bottom-0 right-0 left-0">
+        <input type="text" class="shadow-xl p-4 text-center" style="border: 1px rgb(192, 192, 192) solid;" placeholder="Write Your Message.." id="message">
+        <input type="text" class="shadow-xl p-4 text-center" style="border: 0px rgb(192, 192, 192) solid;" placeholder="Your Name.." id="by">    
+        <button class="shadow-xl shadow-blue-500 p-4 bg-blue-500 text-white" id="send">Send Message</button>
+    </div>
 
     <script src="../scripts/home.js"></script>
 
