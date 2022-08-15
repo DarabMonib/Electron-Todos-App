@@ -30,7 +30,7 @@ socket.on('todo', (item) => {
     console.log(item)
     new Notification(`Message From ${item[1].author}`, { body: item[1].todo, icon: './icons/512x512.png' })
     const ding = new Audio;
-    ding.src = '../../noti.mp3'
+    ding.src = '../sounds/noti.mp3'
     ding.play();
     
     appendItem(item[1]);
@@ -87,7 +87,7 @@ function appendItem(item) {
         itemBlock.appendChild(todo);
         itemBlock.appendChild(author);
 
-        itemBlock.className = "text-lg p-4 mb-2 shadow-xl rounded-xl";
+        itemBlock.className = "text-lg p-4 mb-2 shadow-xl rounded-xl static";
         itemBlock.style.width = 'fit-content'
         itemBlock.style.color = 'black'
         // itemBlock.style.marginLeft = 'auto'

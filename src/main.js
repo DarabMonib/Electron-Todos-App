@@ -59,8 +59,8 @@ function createWindow () {
   ipcMain.on('changeHome', (e, str) => {
 
     if(str == 'close'){
-      win2.close();
-      win.close();
+      // win2.close();
+      // win.close();
       app.quit();
     }
     else if(str == 'max'){

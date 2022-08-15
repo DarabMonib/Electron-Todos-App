@@ -8,5 +8,5 @@ nav{
 }
 
 .static {
-    -webkit-app-region: drag;
+    -webkit-app-region: no-drag;
 }
