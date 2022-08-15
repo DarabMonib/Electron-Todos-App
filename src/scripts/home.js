@@ -23,7 +23,7 @@ window.electronAPI.getImage((e, item) => {
 
 socket.on('todo', (item) => {
     console.log(item)
-    new Notification(`Message From ${item.author}`, { body: item.todo, icon: './icons/512x512.png' })
+    new Notification(`Message From ${item[1].author}`, { body: item[1].todo, icon: './icons/512x512.png' })
     appendItem(item[1]);
 })
 
