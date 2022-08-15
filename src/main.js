@@ -2,13 +2,6 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const { dirname } = require('path')
 const path = require('path')
 
-// Add Mongo Connection..
-const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://darab:QZQ3BmmE0nDjhKCE@cluster0.q8vwrhr.mongodb.net/?retryWrites=true&w=majority');
-
-//Model...
-const Todo = mongoose.model('Todo', { todo: String, author: String });
-
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
@@ -54,13 +47,12 @@ function createWindow () {
   // Initial Todo's Render
   win.webContents.on('did-stop-loading', (e) => {
     console.log('loading Complete!')
-    initialRender(win)
+    // initialRender(win)
   });
 
   ipcMain.on('sendItem', (e, item) => {
+    // Sending items to win 1
     win.webContents.send('fowardItem', item)
-    const todoItem = new Todo({ todo: item.todo, author: item.author });
-    todoItem.save().then(() => console.log('item saved on mongo as well...'));
   })
 
   // Nav Controls... Win 1.. 
@@ -121,9 +113,9 @@ app.on('window-all-closed', () => {
   }
 })
 
-function initialRender(win){
-  Todo.find({}).then((todos) => {
-    console.log('got data => ' + todos)
-    win.webContents.send('init', todos)
-  })
-}
+// function initialRender(win){
+//   Todo.find({}).then((todos) => {
+//     console.log('got data from mongo!')
+//     win.webContents.send('init', todos)
+//   })
+// }

@@ -4,12 +4,12 @@ let author = document.querySelector('#author');
 
 button.addEventListener('click', () => {
 
-    if(todo.value !== '' && author.value !== '')
+    if(todo.value !== '' && author.value !== ''){
         window.electronAPI.sendItem({
             todo: todo.value,
             author: author.value
         })
-
+    }
 })
 
 let closeBtn = document.querySelector('#closeBtn');

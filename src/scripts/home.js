@@ -1,7 +1,8 @@
+// Sockets Connection
+var socket = io.connect('http://localhost:4000')
+
 let section = document.querySelector('section');
 console.log(section);
-
-console.log('right here????')
 
 window.electronAPI.init((e, todos) => {
     console.log(e, todos)
@@ -13,15 +14,29 @@ window.electronAPI.init((e, todos) => {
 window.electronAPI.getImage((e, item) => {
     
     new Notification(`Message From ${item.author}`, { body: item.todo, icon: './icons/512x512.png' })
-    appendItem(item);
+    //Socket Test Emit!!
+    socket.emit('todo', ["POST", {
+        todo: item.todo,
+        author: item.author
+    }]);
 
+})
+
+socket.on('todo', (item) => {
+    console.log(item)
+    appendItem(item[1]);
 })
 
 let button = document.querySelector('button');
 
 button.addEventListener('click', () => {
-    console.log('Okay!')
+    console.log('Sending Socket Signal...')
     window.electronAPI.openWin2(true);
+})
+
+//Socket Listener!!
+socket.on('test', (str) => {
+    console.log('here it is', str);
 })
 
 let closeBtn = document.querySelector('#closeBtn');
@@ -60,7 +75,8 @@ function appendItem(item) {
 
     let author = document.createElement('h4')
         author.className = 'text-sm text-white font-italic'
-        author.innerHTML = '~by ' + item.author + ' on ' + formatDate(new Date());
+        author.innerHTML = '~ by ' + item.author 
+        // + ' on ' + formatDate(new Date());
 
     let itemBlock = document.createElement('nav')
         itemBlock.appendChild(todo);
