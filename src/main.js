@@ -40,13 +40,13 @@ function createWindow () {
   win2.loadFile('src/views/add.html')
 
   ipcMain.on('openWin2', () => {
-    console.log('activating!!!')
+    console.log('Opening Window Number 2...')
     win2.show()
   })
   
   // Initial Todo's Render
   win.webContents.on('did-stop-loading', (e) => {
-    console.log('loading Complete!')
+    console.log('Loading Win Complete!')
     // initialRender(win)
   });
 

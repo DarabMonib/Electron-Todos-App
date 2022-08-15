@@ -1,8 +1,8 @@
 // Sockets Connection
-var socket = io.connect('http://localhost:4000')
+var socket = io.connect('http://192.168.23.211:4000')
+// var socket = io.connect('https://electron-socket-server.vercel.app/');
 
 let section = document.querySelector('section');
-console.log(section);
 
 window.electronAPI.init((e, todos) => {
     console.log(e, todos)
