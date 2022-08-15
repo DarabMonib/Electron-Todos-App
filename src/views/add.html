@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body class="text-center">
+
+    <nav class="p-6 shadow-sm" style="background-color: rgb(247, 247, 247);"></nav>
+
     <h1 class="text-4xl text-gray-600 mt-4 ml-4">Add An Item!</h1>
     <input type="text" class="shadow-xl p-4 mt-4 ml-4 rounded-2xl text-center" placeholder="Todo.." id="todo">
     <br>
@@ -17,7 +20,9 @@
     
     <button class="shadow-xl rounded-2xl shadow-blue-500 p-4 mt-4 ml-4 bg-blue-500 text-white">Add Item</button>
 
-    <div class="text-xl p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0" style="width: fit-content;">❌</div>
+    <div id="closeBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0 bg-white" style="z-index: 10; width: fit-content; -webkit-app-region: no-drag;">❌</div>
+    <div id="maxBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-10 bg-white" style="z-index: 10; width: fit-content; -webkit-app-region: no-drag;">🔲</div>
+    <div id="minBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-20 bg-white" style="z-index: 10; width: fit-content; -webkit-app-region: no-drag;">➖</div>
 
     <script src="../scripts/add.js"></script>
 

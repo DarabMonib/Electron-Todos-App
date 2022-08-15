@@ -9,6 +9,8 @@
 </head>
 <body class="text-center">
 
+    <nav class="p-6 shadow-sm" style="background-color: rgb(247, 247, 247);"></nav>
+
     <aside style="display: flex; align-items: center; justify-content: center;">
         <img src="../icons/512x512.png" width="100" height="100"> 
         <h1 class="text-4xl text-gray-600">
@@ -24,7 +26,9 @@
   
     <section class="shadow-xl"></section>
 
-    <div class="text-xl p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0" style="width: fit-content;">❌</div>
+    <div id="closeBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0 bg-white z-10" style="width: fit-content; -webkit-app-region: no-drag;">❌</div>
+    <div id="maxBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-10 bg-white z-10" style="width: fit-content; -webkit-app-region: no-drag;">🔲</div>
+    <div id="minBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-20 bg-white z-10" style="width: fit-content; -webkit-app-region: no-drag;">➖</div>
 
     <script src="../scripts/home.js"></script>
 

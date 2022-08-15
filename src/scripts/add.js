@@ -12,8 +12,18 @@ button.addEventListener('click', () => {
 
 })
 
-let closeBtn = document.querySelector('div');
+let closeBtn = document.querySelector('#closeBtn');
+let minBtn = document.querySelector('#minBtn');
+let maxBtn = document.querySelector('#maxBtn');
 
 closeBtn.addEventListener('click', () => {
-    window.electronAPI.hideWin2(true);
+    window.electronAPI.changeAdd('close');
+})
+
+minBtn.addEventListener('click', () => {
+    window.electronAPI.changeAdd('min');
+})
+
+maxBtn.addEventListener('click', () => {
+    window.electronAPI.changeAdd('max');
 })

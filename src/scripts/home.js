@@ -44,10 +44,20 @@ button.addEventListener('click', () => {
     window.electronAPI.openWin2(true);
 })
 
-let closeBtn = document.querySelector('div');
+let closeBtn = document.querySelector('#closeBtn');
+let maxBtn = document.querySelector('#maxBtn');
+let minBtn = document.querySelector('#minBtn');
 
 closeBtn.addEventListener('click', () => {
-    window.electronAPI.closeAll(true);
+    window.electronAPI.changeHome('close');
+})
+
+maxBtn.addEventListener('click', () => {
+    window.electronAPI.changeHome('max');
+})
+
+minBtn.addEventListener('click', () => {
+    window.electronAPI.changeHome('min');
 })
 
 function padTo2Digits(num) {

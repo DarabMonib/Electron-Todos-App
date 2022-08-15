@@ -12,6 +12,7 @@ function createWindow () {
     },
     frame: false
   })
+  win.maxCount = 1;
 
   win.loadFile('src/views/home.html')
 
@@ -29,6 +30,7 @@ function createWindow () {
     frame: false,
     show: false
   })
+  win2.maxCount = 1;
 
   win2.on('close', (event) => {
     event.preventDefault()
@@ -46,20 +48,48 @@ function createWindow () {
     win.webContents.send('fowardItem', item)
   })
 
-  // Close All Windows Via Custom Button..
+  // Nav Controls... Win 1.. 
 
-  ipcMain.on('closeAll', () => {
-    console.log('closing app!..')
-    win2.close();
-    win.close();
-    app.quit();
+  ipcMain.on('changeHome', (e, str) => {
+
+    if(str == 'close'){
+      win2.close();
+      win.close();
+      app.quit();
+    }
+    else if(str == 'max'){
+      win.maxCount++;
+      if(win.maxCount%2==0)
+        win.maximize();
+      else
+        win.unmaximize();
+    }
+    else if(str == 'min'){
+      if(win.minimizable)
+        win.minimize();
+    }
   })
 
-  ipcMain.on('hideWin2', () => {
-    console.log('hiding window 2!..')
-    win2.hide();
+  // Nav Controls... Win 2.. 
+
+  ipcMain.on('changeAdd', (e, str) => {
+
+    if(str == 'close'){
+      win2.hide();
+    }
+    else if(str == 'max'){
+      win2.maxCount++;
+      if(win2.maxCount%2==0)
+        win2.maximize();
+      else
+        win2.unmaximize();
+    }
+    else if(str == 'min'){
+      if(win2.minimizable)
+        win2.minimize();
+    }
   })
-  
+
 }
 
 app.whenReady().then(() => {
@@ -77,3 +107,7 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+
+// Add Mongo Connection..
+
