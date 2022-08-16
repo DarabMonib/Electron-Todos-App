@@ -1,7 +1,43 @@
 // Sockets Connection
-// var socket = io.connect('http://192.168.23.212:4000')
-var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
+var socket = io.connect('http://192.168.100.12:4000')
+// var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
 let username = null;
+
+
+
+
+
+
+
+const video = document.getElementById("camera");
+const captureButton = document.getElementById("capture-image");
+const imageTag = document.getElementById("image");
+let imageLive = document.getElementById("live-image");
+
+    setInterval(() => {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL();
+        socket.emit('video', dataURL);
+    }, 5000)
+
+
+socket.on('video', (imgLoad) => {
+    imageLive.src = imgLoad
+})
+
+navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+  video.srcObject = stream;
+});
+
+
+
+
+
+
+
 
 window.electronAPI.setDisplayName((ev, user) => {
     username = user
