@@ -25,12 +25,7 @@ send.addEventListener('click', () => {
 })    
 
 socket.on('todo', (item) => {
-    console.log(item)
-    new Notification(`Message From ${item.author}`, { body: item.todo, icon: './icons/512x512.png' })
-    const ding = new Audio;
-    ding.src = '../sounds/noti.mp3'
-    ding.play();
-    
+        
     if(item.author == username)
         yourMessage(item);
     else
@@ -55,7 +50,12 @@ minBtn.addEventListener('click', () => {
 })
 
 function othersMessage(item) {
-    
+
+    new Notification(`Message From ${item.author}`, { body: item.todo, icon: './icons/512x512.png' })
+    const ding = new Audio;
+    ding.src = '../sounds/noti.mp3'
+    ding.play();
+
     let todo = document.createElement('h2')
     todo.style.color = 'rgb(108, 108, 108)'
     todo.className = 'text-xl text-slate-600 font-bold'
