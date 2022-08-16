@@ -140,13 +140,13 @@ message.addEventListener('blur', () => {
 
 socket.on('typing', (userTypes) => {
 
-    if(userTypes != username){
+    // if(userTypes != username){
         let typerBlock = document.createElement('div');
             typerBlock.innerHTML = `<strong>${username}</strong> is typing..`
             typerBlock.className = username
 
         totalTypers.appendChild(typerBlock);
-    }
+    // }
 
 })
 socket.on('stopped', (username) => {
