@@ -21,6 +21,7 @@ send.addEventListener('click', () => {
         todo: message.value,
         author: username
     });
+    message.value = ''
 
 })    
 
@@ -66,7 +67,6 @@ function othersMessage(item) {
         author.style.textAlign = 'left'
         author.className = 'text-sm text-slate-600 font-italic'
         author.innerHTML =  item.author 
-        // + ' on ' + formatDate(new Date());
 
     let itemBlock = document.createElement('nav')
         itemBlock.appendChild(todo);
@@ -85,6 +85,10 @@ function othersMessage(item) {
 
 function yourMessage(item) {
     
+    const msg = new Audio;
+    msg.src = '../sounds/msg.mp3'
+    msg.play();
+
     let todo = document.createElement('h2')
     todo.style.color = 'white'
     todo.className = 'text-xl text-white font-bold'
@@ -94,7 +98,7 @@ function yourMessage(item) {
         author.style.color = 'white'
         author.style.textAlign = 'right'
         author.className = 'text-sm text-white font-italic'
-        author.innerHTML =  item.author 
+        author.innerHTML =  'you' 
         // + ' on ' + formatDate(new Date());
 
     let itemBlock = document.createElement('nav')
@@ -119,5 +123,6 @@ document.addEventListener('keydown', (e) => {
             todo: message.value,
             author: username
         });
+    message.value = ''
     }
 })
