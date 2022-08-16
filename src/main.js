@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Tray, nativeImage, Menu } = require('electron')
 const { dirname } = require('path')
 const path = require('path')
 
@@ -14,34 +14,35 @@ function createWindow () {
   })
   win.maxCount = 1;
 
-  win.loadFile('src/views/home.html')
+  let trayTemplate = [
+    { role: 'about' },
+    { type: 'separator' },
+    { role: 'services' },
+    { type: 'separator' },
+    { role: 'hide' },
+    { role: 'hideOthers' },
+    { role: 'unhide' },
+    { type: 'separator' },
+    { role: 'quit' }
+  ]
+
+  win.loadFile('src/views/login.html')
+
+  ipcMain.on('continueToChat', (ev, userName) => {
+    console.log(userName)
+    win.loadFile('src/views/home.html')
+    win.on('ready-to-show', () => {
+      win.webContents.send('userName', userName)
+    })
+  })
+
+  // Tray Items.
+  let tray = new Tray(path.join(__dirname, 'icons/512x512.png'));
+  tray.setToolTip('Chat App Tooltip')
+  tray.setContextMenu(Menu.buildFromTemplate(trayTemplate))
 
   win.on('close', () => {
     app.quit();
-  })
-
-  const win2 = new BrowserWindow({
-    width: 600,
-    height: 400,
-    icon: path.join(__dirname, 'icons/512x512.png'),
-    webPreferences: {
-      preload: path.join(__dirname, 'preload/preload-add.js')
-    },
-    frame: false,
-    show: false
-  })
-  win2.maxCount = 1;
-
-  win2.on('close', (event) => {
-    event.preventDefault()
-    // win2.hide()
-  })
-
-  win2.loadFile('src/views/add.html')
-
-  ipcMain.on('openWin2', () => {
-    console.log('Opening Window Number 2...')
-    win2.show()
   })
   
   // Initial Todo's Render
@@ -59,7 +60,6 @@ function createWindow () {
   ipcMain.on('changeHome', (e, str) => {
 
     if(str == 'close'){
-      // win2.close();
       // win.close();
       app.quit();
     }
@@ -73,25 +73,6 @@ function createWindow () {
     else if(str == 'min'){
       if(win.minimizable)
         win.minimize();
-    }
-  })
-
-  // Nav Controls... Win 2.. 
-  ipcMain.on('changeAdd', (e, str) => {
-
-    if(str == 'close'){
-      win2.hide();
-    }
-    else if(str == 'max'){
-      win2.maxCount++;
-      if(win2.maxCount%2==0)
-        win2.maximize();
-      else
-        win2.unmaximize();
-    }
-    else if(str == 'min'){
-      if(win2.minimizable)
-        win2.minimize();
     }
   })
 

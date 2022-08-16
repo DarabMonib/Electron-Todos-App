@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <title>Login</title>
+</head>
+<body class="text-center">
+    
+    <nav class="p-6 shadow-sm" style="background-color: rgb(247, 247, 247);"></nav>
+    
+    <div id="closeBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0 bg-white z-10 static" style="width: fit-content;">❌</div>
+    <div id="maxBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-10 bg-white z-10 static" style="width: fit-content;">🔲</div>
+    <div id="minBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-20 bg-white z-10 static" style="width: fit-content;">➖</div>
+
+    <aside style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h1 class="text-4xl text-gray-600 p-4">
+           Chat App
+        </h1>
+    </aside>
+
+    <p class="text-xs p-2" style="color: rgb(163, 163, 163);">
+        A test app that allows you to use live-chat..
+    </p>
+
+    <h1 class="text-2xl p-4" style="color: rgb(121, 121, 121);">
+        Please Enter Your Name Below To Continue to Chat...
+    </h1>
+
+    <!-- <h1 class="text-xl bg-blue-500" style="margin: auto; width: 80%; color: rgb(255, 255, 255);">
+        People Online
+    </h1>
+
+    <div style="margin: auto; width: 80%; border: 1px rgb(184, 184, 184) solid; color: rgb(122, 122, 122); ">
+        <div>Some one</div>
+        <div>Another One</div>
+        <div>Maybe One More?</div>
+    </div> -->
+
+    <div class="flex flex-col shadow-xl" style="align-content: center; width: 80%; margin: 10% auto;">
+        <input type="text" id="name" class="shadow-xl p-4 text-center" placeholder="Enter your display name!">
+        <button id="continue" class="shadow-xl shadow-blue-500 p-4 bg-blue-500 text-white">Continue</button>    
+    </div>
+
+    <script src="../scripts/login.js"></script>
+
+</body>
+</html>

@@ -1,6 +1,12 @@
 // Sockets Connection
 // var socket = io.connect('http://192.168.100.12:4000')
 var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
+let username = null;
+
+window.electronAPI.setDisplayName((ev, user) => {
+    username = user
+    console.log('User is here! ' + user);
+})
 
 let section = document.querySelector('section');
 
@@ -9,36 +15,31 @@ let by = document.querySelector('#by');
 
 let send = document.querySelector('#send');
 
-window.electronAPI.init((e, todos) => {
-    console.log(e, todos)
-    todos.forEach(item => {
-        appendItem(item._doc)
-    });
-})
+// window.electronAPI.init((e, todos) => {
+//     console.log(e, todos)
+//     todos.forEach(item => {
+//         appendItem(item._doc)
+//     });
+// })
 
 send.addEventListener('click', () => {
 
     //Socket Test Emit!!
-    socket.emit('todo', ["POST", {
+    socket.emit('todo', {
         todo: message.value,
-        author: by.value
-    }]);
+        author: username
+    });
 
 })    
 
 socket.on('todo', (item) => {
     console.log(item)
-    new Notification(`Message From ${item[1].author}`, { body: item[1].todo, icon: './icons/512x512.png' })
+    new Notification(`Message From ${item.author}`, { body: item.todo, icon: './icons/512x512.png' })
     const ding = new Audio;
     ding.src = '../sounds/noti.mp3'
     ding.play();
     
-    appendItem(item[1]);
-})
-
-//Socket Listener!!
-socket.on('test', (str) => {
-    console.log('here it is', str);
+    appendItem(item);
 })
 
 let closeBtn = document.querySelector('#closeBtn');
@@ -56,18 +57,6 @@ maxBtn.addEventListener('click', () => {
 minBtn.addEventListener('click', () => {
     window.electronAPI.changeHome('min');
 })
-
-function padTo2Digits(num) {
-    return num.toString().padStart(2, '0');
-}
-  
-function formatDate(date) {
-    return [
-        padTo2Digits(date.getDate()),
-        padTo2Digits(date.getMonth() + 1),
-        date.getFullYear(),
-    ].join('/');
-}
 
 function appendItem(item) {
     
@@ -97,3 +86,12 @@ function appendItem(item) {
     section.scrollTo(0, section.scrollHeight);
 
 }
+
+document.addEventListener('keydown', (e) => {
+    if(e.key == "Enter"){
+        socket.emit('todo', {
+            todo: message.value,
+            author: username
+        });
+    }
+})
