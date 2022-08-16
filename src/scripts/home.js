@@ -1,5 +1,5 @@
 // Sockets Connection
-// var socket = io.connect('http://192.168.100.12:4000')
+// var socket = io.connect('http://192.168.23.212:4000')
 var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
 let username = null;
 
