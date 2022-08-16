@@ -8,7 +8,7 @@ window.electronAPI.setDisplayName((ev, user) => {
 })
 
 let section = document.querySelector('section');
-
+let totalTypers = document.querySelector('.totalTypers');
 let message = document.querySelector('#message');
 let by = document.querySelector('#by');
 
@@ -125,4 +125,33 @@ document.addEventListener('keydown', (e) => {
         });
     message.value = ''
     }
+})
+
+// Focus socket event...
+
+message.addEventListener('focus', () => {
+    console.log('focus')
+    socket.emit('typing', username)
+})
+message.addEventListener('blur', () => {
+    console.log('blur')
+    socket.emit('stopped', username)
+})
+
+socket.on('typing', (userTypes) => {
+
+    if(userTypes != username){
+        let typerBlock = document.createElement('div');
+            typerBlock.innerHTML = `<strong>${username}</strong> is typing..`
+            typerBlock.className = username
+
+        totalTypers.appendChild(typerBlock);
+    }
+
+})
+socket.on('stopped', (username) => {
+
+    let typerResel = document.querySelector('.' + username);
+    typerResel.remove();
+
 })
