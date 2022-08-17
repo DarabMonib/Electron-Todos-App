@@ -1,6 +1,6 @@
 // Sockets Connection
-// var socket = io.connect('http://192.168.23.212:4000')
-var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
+var socket = io.connect('http://192.168.23.212:4000')
+// var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
 let username = null;
 
 window.electronAPI.setDisplayName((ev, user) => {
