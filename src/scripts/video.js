@@ -1,4 +1,4 @@
-var socket = io.connect('http://192.168.100.12:4000')
+var socket = io.connect('http://192.168.23.212:4000')
 let username = null;
 let videosFlex = document.querySelector('.videos-flex')
 
@@ -22,12 +22,12 @@ const imageTag = document.getElementById("image");
 
 socket.on('video', ([imgLoad, userNameGet]) => {
     let videoBox = document.querySelector('.video-' + userNameGet)
-    if(videoBox){
+    if(videosFlex.children.length !== 0){
         videoBox.src = imgLoad
     }
     else{
         let vBox = document.createElement('img');
-        vBox.className = '.video-' + userNameGet
+        vBox.className = 'video-' + userNameGet
         vBox.src = imgLoad
         videosFlex.appendChild(vBox)
     }
