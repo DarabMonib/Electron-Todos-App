@@ -28,9 +28,9 @@ socket.on('video', ([imgLoad, userNameGet]) => {
     if(userNameGet === 'zaryab'){
         zaryab.src = imgLoad
     }
-    if(userNameGet === 'darab'){
-        darab.src = imgLoad
-    }
+    // if(userNameGet === 'darab'){
+    //     darab.src = imgLoad
+    // }
 
 })
 
