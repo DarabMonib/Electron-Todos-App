@@ -1,6 +1,6 @@
 // Sockets Connection
-// var socket = io.connect('http://192.168.23.212:4000')
-var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
+var socket = io.connect('http://192.168.23.212:4000')
+// var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
 let username = null;
 
 window.electronAPI.setDisplayName((ev, user) => {
@@ -31,7 +31,6 @@ document.addEventListener('keydown', (e) => {
         else
             sendMessage(message.value, username)
         
-
     }
 })
 
@@ -139,19 +138,15 @@ function inviteMessage(item) {
     let todo = document.createElement('h2')
     todo.style.color = 'rgb(108, 108, 108)'
     todo.className = 'text-xl text-slate-600 font-bold'
-    todo.innerHTML = item.todo
+    todo.innerHTML = `<div>${item.todo}</div>`
 
     let controls = document.createElement('div');
         controls.innerHTML = `
-        <button class="p-4 bg-green-400" onclick="AcceptInv()"> Accept </button>
-        <button class="p-4 bg-green-400" > Ignore </button>`
+        <button class="p-4 bg-green-400 mb-2 shadow-green-400 shadow-xl rounded-xl " onclick="AcceptInv()"> Accept </button>
+        <button class="p-4 bg-red-400 mb-2 shadow-red-400 shadow-xl rounded-xl " > Ignore </button>`
 
     let itemBlock = document.createElement('nav')
         itemBlock.appendChild(todo);
-
-        if(username == item.todo.split(' ')[3]){
-            itemBlock.appendChild(controls);
-        }
 
         itemBlock.className = "text-lg p-4 mb-2 shadow-xl rounded-xl static";
         itemBlock.style.width = 'fit-content'
@@ -160,6 +155,9 @@ function inviteMessage(item) {
         itemBlock.style.marginRight = 'auto'
 
     section.appendChild(itemBlock)
+    if(username == item.todo.split(' ')[3]){
+        section.appendChild(controls);
+    }
     section.scrollTo(0, section.scrollHeight);
 
 }
@@ -212,10 +210,7 @@ function isCodeRequest(messageToCheck) {
 
 }
 
-function AcceptInv() {
-
-    // continue from here..
-
-    // socket.emit()
-
+function AcceptInv(invitation) {
+    // Complete....
+    
 }
