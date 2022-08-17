@@ -32,9 +32,9 @@ function createWindow () {
     console.log(userName)
     win.loadFile('src/views/home.html')
     win.on('ready-to-show', () => {
-      win.webContents.send('userName', userName+`[${__dirname.split('/')[2]}]`)
+      win.webContents.send('userName', userName+` <strong>[${__dirname.split('/')[2]}]</strong>`)
     })
-  })
+  }) 
 
   // Tray Items.
   let tray = new Tray(path.join(__dirname, 'icons/512x512.png'));
