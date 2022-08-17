@@ -2,6 +2,9 @@ var socket = io.connect('http://192.168.23.212:4000')
 let username = null;
 let videosFlex = document.querySelector('.videos-flex')
 
+let darab = document.querySelector('#darab')
+let zaryab = document.querySelector('#zaryab')
+
 window.electronAPI.setDisplayName((ev, user) => {
     username = user
 })
@@ -21,16 +24,14 @@ const imageTag = document.getElementById("image");
 
 
 socket.on('video', ([imgLoad, userNameGet]) => {
-    let videoBox = document.querySelector('.video-' + userNameGet)
-    if(videoBox){
-        videoBox.src = imgLoad
+
+    if(userNameGet === 'zaryab'){
+        zaryab.src = imgLoad
     }
-    else{
-        let vBox = document.createElement('img');
-        vBox.className = 'video-' + userNameGet
-        vBox.src = imgLoad
-        videosFlex.appendChild(vBox)
+    if(userNameGet === 'darab'){
+        darab.src = imgLoad
     }
+
 })
 
 navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
