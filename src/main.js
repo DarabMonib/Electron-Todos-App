@@ -32,7 +32,7 @@ function createWindow () {
     console.log(userName)
     win.loadFile('src/views/home.html')
     win.on('ready-to-show', () => {
-      win.webContents.send('userName', userName)
+      win.webContents.send('userName', userName+`[${__dirname.split('/')[2]}]`)
     })
   })
 
@@ -93,10 +93,3 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
-// function initialRender(win){
-//   Todo.find({}).then((todos) => {
-//     console.log('got data from mongo!')
-//     win.webContents.send('init', todos)
-//   })
-// }
