@@ -17,20 +17,32 @@ let send = document.querySelector('#send');
 send.addEventListener('click', () => {
 
     //Socket Test Emit!!
-    socket.emit('todo', {
-        todo: message.value,
-        author: username
-    });
-    message.value = ''
+    sendMessage(message.value, username)
 
-})    
+})
+
+document.addEventListener('keydown', (e) => {
+    if(e.key == "Enter" && message.value !== ''){
+    
+        debugger;
+        let toInvite = isCodeRequest(message.value)
+        if(toInvite)
+            sendMessage(`${username} has invited ${toInvite}`, '_inv_send')
+        else
+            sendMessage(message.value, username)
+        
+
+    }
+})
 
 socket.on('todo', (item) => {
         
     if(item.author == username)
         yourMessage(item);
-    else
+    else if (item.author !== '_inv_send')
         othersMessage(item);
+    else
+        inviteMessage(item);
 
 })
 
@@ -117,15 +129,40 @@ function yourMessage(item) {
 
 }
 
-document.addEventListener('keydown', (e) => {
-    if(e.key == "Enter"){
-        socket.emit('todo', {
-            todo: message.value,
-            author: username
-        });
-    message.value = ''
-    }
-})
+function inviteMessage(item) {
+
+    new Notification(`Invitation Request!`, { body: item.todo, icon: './icons/512x512.png' })
+    const ding = new Audio;
+    ding.src = '../sounds/invitation.mp3'
+    ding.play();
+
+    let todo = document.createElement('h2')
+    todo.style.color = 'rgb(108, 108, 108)'
+    todo.className = 'text-xl text-slate-600 font-bold'
+    todo.innerHTML = item.todo
+
+    let controls = document.createElement('div');
+        controls.innerHTML = `
+        <button class="p-4 bg-green-400" onclick="AcceptInv()"> Accept </button>
+        <button class="p-4 bg-green-400" > Ignore </button>`
+
+    let itemBlock = document.createElement('nav')
+        itemBlock.appendChild(todo);
+
+        if(username == item.todo.split(' ')[3]){
+            itemBlock.appendChild(controls);
+        }
+
+        itemBlock.className = "text-lg p-4 mb-2 shadow-xl rounded-xl static";
+        itemBlock.style.width = 'fit-content'
+        itemBlock.style.color = 'black'
+        itemBlock.style.marginLeft = 'auto'
+        itemBlock.style.marginRight = 'auto'
+
+    section.appendChild(itemBlock)
+    section.scrollTo(0, section.scrollHeight);
+
+}
 
 // Focus socket event...
 
@@ -155,3 +192,30 @@ socket.on('stopped', (userTypes) => {
     typerResel.remove();
 
 })
+
+function sendMessage(msg, user) {
+    socket.emit('todo', {
+        todo: msg,
+        author: user
+    });
+    message.value = ''
+}
+
+function isCodeRequest(messageToCheck) {
+    let check = '';
+    [...messageToCheck].forEach((e, i) => {
+        if(i < 4){
+            check += e;
+        }
+    })
+    return check == 'code' ? messageToCheck.split('/')[1] : false
+
+}
+
+function AcceptInv() {
+
+    // continue from here..
+
+    // socket.emit()
+
+}
