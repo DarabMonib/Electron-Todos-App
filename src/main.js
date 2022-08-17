@@ -32,7 +32,7 @@ function createWindow () {
     console.log(userName)
     win.loadFile('src/views/home.html')
     win.on('ready-to-show', () => {
-      win.webContents.send('userName', userName+` <strong>[${__dirname.split('/')[2]}]</strong>`)
+      win.webContents.send('userName', userName+` ~<b><i>${__dirname.split('/')[2]}</i></b>`)
     })
   }) 
 
