@@ -1,7 +1,7 @@
 {
-  "name": "Todos",
+  "name": "ChatApp",
   "version": "1.0.0",
-  "description": "Write down Your Tasks? prolly...  ~Created With Electron!",
+  "description": "A Simple Chat App that supports Global chat using socket.io/electron",
   "main": "src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -13,7 +13,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld("electronAPI", {
   // Login Essential..
-  continueToChat: (displayName) => ipcRenderer.send('continueToChat', displayName),
+  continueToChat: ([displayName, mode]) => ipcRenderer.send('continueToChat', [displayName, mode]),
   
   // Chat Essentials..
   init: (todos) => ipcRenderer.on('init', todos),

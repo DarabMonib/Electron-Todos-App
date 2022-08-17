@@ -19,8 +19,12 @@ let continues = document.querySelector('#continue');
 
 continues.addEventListener('click', () => 
     userName.value !== '' ? 
-    window.electronAPI.continueToChat(userName.value)
+    window.electronAPI.continueToChat([userName.value, 'message-chat'])
     :''
 )
 
-console.log(window.electronAPI)
+document.querySelector('#video-chat').addEventListener('click', () => 
+    userName.value !== '' ? 
+    window.electronAPI.continueToChat([userName.value, 'video-chat'])
+    :''
+)

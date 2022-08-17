@@ -28,12 +28,19 @@ function createWindow () {
 
   win.loadFile('src/views/login.html')
 
-  ipcMain.on('continueToChat', (ev, userName) => {
-    console.log(userName)
-    win.loadFile('src/views/home.html')
-    win.on('ready-to-show', () => {
+  ipcMain.on('continueToChat', (ev, [userName, mode]) => {
+    // console.log(mode)
+    if(mode == 'message-chat') {
+      console.log('if', mode, userName)
+      win.loadFile('src/views/home.html')
+    } else {
+      console.log('else', mode, userName)
+      win.loadFile('src/views/video.html')
+    }
+      win.on('ready-to-show', () => {
       win.webContents.send('userName', userName)
     })
+
   })
 
   // Tray Items.
@@ -93,10 +100,3 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
-// function initialRender(win){
-//   Todo.find({}).then((todos) => {
-//     console.log('got data from mongo!')
-//     win.webContents.send('init', todos)
-//   })
-// }

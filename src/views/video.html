@@ -21,21 +21,34 @@
 
     <p style="color: rgb(177, 184, 190);">Write your messages in the chat box below...</p>
 
-    <section class="text-center h-72 static" style="width: 80%; margin: auto; overflow-y: scroll; overflow-x: hidden; margin-left: auto; margin-right: auto; overflow-wrap: break-word; scrollbar-width: none;"></section>
+    <div class="videos-flex" style="display: flex; flex-wrap: wrap;">
+        
+    </div>
 
     <div class="totalTypers" style="width: 80%; height: 6%; margin: auto;">
+    <!-- Dynamic Divs -->
+    <!-- <div>
+            <strong class="usertyping">
+                'name of typer'
+            </strong> is typing...
+        </div> -->
     </div>
 
     <div id="closeBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-0 bg-white z-10 static" style="width: fit-content;">❌</div>
     <div id="maxBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-10 bg-white z-10 static" style="width: fit-content;">🔲</div>
     <div id="minBtn" class="text-xs p-2 m-2 rounded-full shadow-lg cursor-pointer fixed top-0 right-20 bg-white z-10 static" style="width: fit-content;">➖</div>
 
-    <div class="flex flex-col fixed bottom-0 right-0 left-0">
+    <!-- <div class="flex flex-col fixed bottom-0 right-0 left-0">
         <input type="text" class="shadow-xl p-4 text-center" style="border: 1px rgb(192, 192, 192) solid;" placeholder="Write Your Message.." id="message">
         <button class="shadow-xl shadow-blue-500 p-4 bg-blue-500 text-white" id="send">Send Message</button>
-    </div>
+    </div> -->
 
-    <script src="../scripts/home.js"></script>
+    <h1>Camera Access</h1>
+    <video autoplay width="400" height="300" id="camera"></video>
+    <img id="image" />
+    <button id="capture-image">Capture Image</button>
+
+    <script src="../scripts/video.js"></script>
 
 </body>
 </html>
