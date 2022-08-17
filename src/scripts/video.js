@@ -22,7 +22,7 @@ const imageTag = document.getElementById("image");
 
 socket.on('video', ([imgLoad, userNameGet]) => {
     let videoBox = document.querySelector('.video-' + userNameGet)
-    if(videosFlex.children.length !== 0){
+    if(videoBox){
         videoBox.src = imgLoad
     }
     else{
