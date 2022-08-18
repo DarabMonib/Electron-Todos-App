@@ -26,9 +26,7 @@ let username = window.localStorage.getItem('username');
     })
 
     socket.on('codeChange', (val) => {
-        if(username !== val[1])
-            editor.setValue(val[0]);
-
+        editor.setValue(val[0]);
     })
 
     function findDiff(str1, str2){ 
