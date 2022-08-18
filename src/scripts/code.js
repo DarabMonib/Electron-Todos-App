@@ -2,7 +2,6 @@
 var socket = io.connect('http://192.168.23.212:4000')
 
 let screen = document.querySelector('#live-code');
-let lv = document.querySelector('#live');
 let compile = document.querySelector('#compile');
 let lastVal = '';
 
@@ -43,10 +42,7 @@ var myCodeMirror = CodeMirror(screen, {
 
     socket.on('codeChange', (val) => {
         myCodeMirror.setValue(val);
-
-            let difference = findDiff(lastVal, val)
-
-        myCodeMirror.setCursor(myCodeMirror.lineCount(), difference[1]);
+        myCodeMirror.setCursor(myCodeMirror.lineCount(), 0);
 
     })
 
@@ -61,13 +57,3 @@ var myCodeMirror = CodeMirror(screen, {
         });
         return [diff, indx];
     }
-
-
-
-    lv.addEventListener('input', (e) => {
-        socket.emit('codeChange', e.target.value )
-    })
-
-    socket.on('codeChange', (data) => {
-        lv.value = data;
-    })
