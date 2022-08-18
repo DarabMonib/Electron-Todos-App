@@ -14,6 +14,7 @@ let minBtn = document.querySelector('#minBtn');
 
 // Electro Api..
     window.electronAPI.setDisplayName((ev, user) => {
+        window.localStorage.setItem('username', user)
         username = user
     })
 

@@ -1,48 +1,33 @@
 // Sockets Connection
 var socket = io.connect('http://192.168.23.212:4000')
-
-let screen = document.querySelector('#live-code');
 let compile = document.querySelector('#compile');
 let lastVal = '';
+let username = window.localStorage.getItem('username');
 
-// screen.addEventListener('input', (e) => {
-//     socket.emit('codeChange', e.target.value)
-// })
+// Electro Api..
 
-var myCodeMirror = CodeMirror(screen, {
-    theme: "darcula",
-    mode: 'javascript',
-    value: '\n\t// Start Live-code here! 🎉',
-    lineWrapping: true,
-    lineNumbers: true,
-    styleActiveLine: true,
-    matchBrackets: true
-})
+    var editor = CodeMirror(document.querySelector('#live-code'), {
+        theme: "darcula",
+        mode: 'javascript',
+        value: '\n\t// Start Live-code here! 🎉',
+        lineWrapping: true,
+        lineNumbers: true,
+        styleActiveLine: true,
+        matchBrackets: true
+    })
+    editor.setSize(700, 500);
 
-    // document presses..
-        // if code is same like last skip..
-        // else socket..
-
-    document.addEventListener('keyup', () => {
-        if(lastVal != ''){
-            let newVal = String(myCodeMirror.getValue())
-            if(lastVal != newVal){
-                console.log(lastVal + ' != ' + newVal);
-                lastVal = newVal;
-                socket.emit('codeChange', newVal);
-            }
-            else {
-                console.log('no changes made..')
-            }
-        }
-        else{
-            lastVal = String(myCodeMirror.getValue())
+    editor.on('change', (inst, change) => {
+        const { origin } = change;
+        console.log(origin, change);
+        if(origin != 'setVal'){
+            socket.emit('codeChange', [inst.getValue(), username])
         }
     })
 
     socket.on('codeChange', (val) => {
-        myCodeMirror.setValue(val);
-        myCodeMirror.setCursor(myCodeMirror.lineCount(), 0);
+        if(username !== val[1])
+            editor.setValue(val[0]);
 
     })
 
