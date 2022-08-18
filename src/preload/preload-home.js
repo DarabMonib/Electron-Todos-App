@@ -20,5 +20,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getImage: (item) => ipcRenderer.on('fowardItem', item),
   openWin2: (bool) => ipcRenderer.send('openWin2', bool),
   changeHome: (toChange) => ipcRenderer.send('changeHome', toChange),
-  setDisplayName: (username) => ipcRenderer.on('userName', username)
+  setDisplayName: (username) => ipcRenderer.on('userName', username),
+  openCode: () => ipcRenderer.send('openCode')
 })

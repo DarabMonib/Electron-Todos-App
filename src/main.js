@@ -36,6 +36,26 @@ function createWindow () {
     })
   })
 
+
+
+  const code = new BrowserWindow({
+    width: 700,
+    height: 500,
+    icon: path.join(__dirname, 'icons/512x512.png'),
+    webPreferences: {
+      preload: path.join(__dirname, 'preload/preload-home.js')
+    },
+    show: false,
+    frame: false
+  })
+
+  code.loadFile('src/views/code.html')
+
+  ipcMain.on('openCode', () => {
+    code.show()
+  })
+  
+
   // Tray Items.
   let tray = new Tray(path.join(__dirname, 'icons/512x512.png'));
   tray.setToolTip('Chat App Tooltip')

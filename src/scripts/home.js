@@ -48,8 +48,10 @@ let minBtn = document.querySelector('#minBtn');
     document.addEventListener('keydown', (e) => {
         if(e.key == "Enter" && message.value !== ''){
             let toInvite = isCodeRequest(message.value)
-            if(toInvite)
-                sendMessage(`${username} has invited ${toInvite}`, '_inv_send')
+            if(toInvite){
+                sendMessage(`${username} has invited ${toInvite}`, '_inv_send');
+                socket.emit('invitation', 'send');
+            }
             else
                 sendMessage(message.value, username)
         }
@@ -67,7 +69,6 @@ let minBtn = document.querySelector('#minBtn');
             inviteMessage(item);
 
     })
-
     socket.on('typing', (userTypes) => {
 
         if(userTypes != username){
@@ -85,7 +86,9 @@ let minBtn = document.querySelector('#minBtn');
         typerResel.remove();
 
     })
-
+    socket.on('invitation', () => {
+        window.electronAPI.openCode()
+    })
 
 // functions..
 
@@ -171,8 +174,8 @@ function inviteMessage(item) {
 
     let controls = document.createElement('div');
         controls.innerHTML = `
-        <button class="p-4 bg-green-400 mb-2 shadow-green-400 shadow-xl rounded-xl " onclick="AcceptInv()"> Accept </button>
-        <button class="p-4 bg-red-400 mb-2 shadow-red-400 shadow-xl rounded-xl " > Ignore </button>`
+        <button style="color: white" class="p-4 bg-green-400 mb-2 shadow-green-400 shadow-xl rounded-xl " onclick="AcceptInv()"> Accept </button>
+        <button style="color: white" class="p-4 bg-red-400 mb-2 shadow-red-400 shadow-xl rounded-xl " > Ignore </button>`
 
     let itemBlock = document.createElement('nav')
         itemBlock.appendChild(todo);
@@ -210,7 +213,9 @@ function isCodeRequest(messageToCheck) {
 
 }
 
-function AcceptInv(invitation) {
+function AcceptInv() {
     // Complete....
-    socket.emit('invitation')
+    console.log('Accepting')
+    // Sends response to accept invite..
+    socket.emit('invitation' , 'accept')
 }
