@@ -3,63 +3,92 @@ var socket = io.connect('http://192.168.23.212:4000')
 // var socket = io.connect('https://electron-sockets-server.herokuapp.com/');
 let username = null;
 
-window.electronAPI.setDisplayName((ev, user) => {
-    username = user
-})
-
 let section = document.querySelector('section');
 let totalTypers = document.querySelector('.totalTypers');
 let message = document.querySelector('#message');
 let by = document.querySelector('#by');
-
 let send = document.querySelector('#send');
-
-send.addEventListener('click', () => {
-
-    //Socket Test Emit!!
-    sendMessage(message.value, username)
-
-})
-
-document.addEventListener('keydown', (e) => {
-    if(e.key == "Enter" && message.value !== ''){
-    
-        debugger;
-        let toInvite = isCodeRequest(message.value)
-        if(toInvite)
-            sendMessage(`${username} has invited ${toInvite}`, '_inv_send')
-        else
-            sendMessage(message.value, username)
-        
-    }
-})
-
-socket.on('todo', (item) => {
-        
-    if(item.author == username)
-        yourMessage(item);
-    else if (item.author !== '_inv_send')
-        othersMessage(item);
-    else
-        inviteMessage(item);
-
-})
-
 let closeBtn = document.querySelector('#closeBtn');
 let maxBtn = document.querySelector('#maxBtn');
 let minBtn = document.querySelector('#minBtn');
 
-closeBtn.addEventListener('click', () => {
-    window.electronAPI.changeHome('close');
-})
+// Electro Api..
+    window.electronAPI.setDisplayName((ev, user) => {
+        username = user
+    })
 
-maxBtn.addEventListener('click', () => {
-    window.electronAPI.changeHome('max');
-})
+// Events...
 
-minBtn.addEventListener('click', () => {
-    window.electronAPI.changeHome('min');
-})
+    closeBtn.addEventListener('click', () => {
+        window.electronAPI.changeHome('close');
+    })
+
+    maxBtn.addEventListener('click', () => {
+        window.electronAPI.changeHome('max');
+    })
+
+    minBtn.addEventListener('click', () => {
+        window.electronAPI.changeHome('min');
+    })
+
+    message.addEventListener('focus', () => {
+        console.log('focus')
+        socket.emit('typing', username)
+    })
+    message.addEventListener('blur', () => {
+        console.log('blur')
+        socket.emit('stopped', username)
+    })
+
+    send.addEventListener('click', () => {
+        //Socket Test Emit!!
+        sendMessage(message.value, username)
+    })
+
+    document.addEventListener('keydown', (e) => {
+        if(e.key == "Enter" && message.value !== ''){
+            let toInvite = isCodeRequest(message.value)
+            if(toInvite)
+                sendMessage(`${username} has invited ${toInvite}`, '_inv_send')
+            else
+                sendMessage(message.value, username)
+        }
+    })
+
+// Socket listeners..
+
+    socket.on('todo', (item) => {
+            
+        if(item.author == username)
+            yourMessage(item);
+        else if (item.author !== '_inv_send')
+            othersMessage(item);
+        else
+            inviteMessage(item);
+
+    })
+
+    socket.on('typing', (userTypes) => {
+
+        if(userTypes != username){
+            let typerBlock = document.createElement('div');
+                typerBlock.innerHTML = `<strong>${userTypes}</strong> is typing..`
+                typerBlock.className = userTypes
+
+            totalTypers.appendChild(typerBlock);
+        }
+
+    })
+    socket.on('stopped', (userTypes) => {
+
+        let typerResel = document.querySelector('.' + userTypes);
+        typerResel.remove();
+
+    })
+
+
+// functions..
+
 
 function othersMessage(item) {
 
@@ -162,35 +191,6 @@ function inviteMessage(item) {
 
 }
 
-// Focus socket event...
-
-message.addEventListener('focus', () => {
-    console.log('focus')
-    socket.emit('typing', username)
-})
-message.addEventListener('blur', () => {
-    console.log('blur')
-    socket.emit('stopped', username)
-})
-
-socket.on('typing', (userTypes) => {
-
-    if(userTypes != username){
-        let typerBlock = document.createElement('div');
-            typerBlock.innerHTML = `<strong>${userTypes}</strong> is typing..`
-            typerBlock.className = userTypes
-
-        totalTypers.appendChild(typerBlock);
-    }
-
-})
-socket.on('stopped', (userTypes) => {
-
-    let typerResel = document.querySelector('.' + userTypes);
-    typerResel.remove();
-
-})
-
 function sendMessage(msg, user) {
     socket.emit('todo', {
         todo: msg,
@@ -212,5 +212,5 @@ function isCodeRequest(messageToCheck) {
 
 function AcceptInv(invitation) {
     // Complete....
-    
+    socket.emit('invitation')
 }
