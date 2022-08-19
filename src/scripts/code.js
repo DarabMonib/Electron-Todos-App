@@ -4,8 +4,10 @@ let compile = document.querySelector('#compile');
 let lastVal = '';
 let username = window.localStorage.getItem('username');
 
-// Electro Api..
+    let cursors = [];
+    let cursorsObj = {};
 
+    // Electro Api..
     var editor = CodeMirror(document.querySelector('#live-code'), {
         theme: "darcula",
         mode: 'javascript',
@@ -18,25 +20,37 @@ let username = window.localStorage.getItem('username');
     editor.setSize(700, 500);
 
     editor.on('change', (inst, change) => {
-        const { origin } = change;
+        const { origin, to } = change;
         console.log(origin, change);
-        if(origin != 'setVal'){
-            socket.emit('codeChange', [inst.getValue(), username])
+        if(origin != 'setValue'){
+            socket.emit('codeChange', [inst.getValue(), to, username])
         }
     })
 
-    socket.on('codeChange', (val) => {
-        editor.setValue(val[0]);
-    })
+    socket.off().on('codeChange', ([val, cursorPos, userTag]) => {
+        editor.setValue(val);
+    
+        // if cursor of that person already exists...
+        if(cursors.find(el => el == userTag)){
+            editor.setBookmark(cursorPos, { widget: cursors[`${userTag}`] })
+        }
 
-    function findDiff(str1, str2){ 
-        let diff= "";
-        let indx = 0;
-        str2.split('').forEach(function(val, i){
-          if (val != str1.charAt(i)){
-            diff += val ;
-            indx = i;
-          }
-        });
-        return [diff, indx];
+        else {
+            
+            //generateCursor();
+            //then move it
+        }
+
+    })
+    function generateCursor() {
+        const cursorCoords = editor.cursorCoords({line: 0, ch: 0});
+        const cursorElement = document.createElement('span');
+        cursorElement.style.borderLeftStyle = 'solid';
+        cursorElement.style.borderLeftWidth = '2px';
+        cursorElement.style.borderLeftColor = '#ff0000';
+        cursorElement.style.height = `${(cursorCoords.bottom - cursorCoords.top)}px`;
+        cursorElement.style.padding = 0;
+        cursorElement.style.zIndex = 0;
+
+        return cursorElement;
     }
